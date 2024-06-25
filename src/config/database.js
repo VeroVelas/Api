@@ -27,7 +27,6 @@ const connectToMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.connectToMongo = connectToMongo;
-
 const connectToMySQL = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const connection = yield (0, promise_1.createConnection)({

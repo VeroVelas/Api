@@ -11,11 +11,11 @@ export class MysqlUserRepository implements UserRepository {
 
     async save(user: User): Promise<User> {
         const [result] = await this.connection.execute(
-            'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-            [user.name, user.email, user.password]
+            'INSERT INTO users (nombre, apellido, correo, password) VALUES (?, ?, ?, ?)',
+            [user.nombre, user.apellido, user.correo, user.password]
         );
         const insertId = (result as any).insertId;
-        return new User(insertId.toString(), user.name, user.email, user.password);
+        return new User(insertId.toString(), user.nombre, user.apellido, user.correo, user.password);
     }
 
     async findById(id: string): Promise<User | null> {
@@ -23,19 +23,19 @@ export class MysqlUserRepository implements UserRepository {
         const users = rows as any[];
         if (users.length === 0) return null;
         const user = users[0];
-        return new User(user.id.toString(), user.name, user.email, user.password);
+        return new User(user.id.toString(), user.nombre, user.apellido, user.correo, user.password);
     }
 
     async findAll(): Promise<User[]> {
         const [rows] = await this.connection.execute('SELECT * FROM users');
         const users = rows as any[];
-        return users.map(user => new User(user.id.toString(), user.name, user.email, user.password));
+        return users.map(user => new User(user.id.toString(), user.nombre, user.apellido, user.correo, user.password));
     }
 
     async update(user: User): Promise<User | null> {
         await this.connection.execute(
-            'UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?',
-            [user.name, user.email, user.password, user.id]
+            'UPDATE users SET nombre = ?, apellido = ?, correo = ?, password = ? WHERE id = ?',
+            [user.nombre, user.apellido, user.correo, user.password, user.id]
         );
         return user;
     }

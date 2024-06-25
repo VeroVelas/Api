@@ -36,8 +36,9 @@ exports.MongoUserRepository = void 0;
 const user_1 = require("../../domain/user");
 const mongoose_1 = __importStar(require("mongoose"));
 const userSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
+    nombre: { type: String, required: true },
+    apellido: { type: String, required: true },
+    correo: { type: String, required: true },
     password: { type: String, required: true },
 });
 const UserModel = mongoose_1.default.model('User', userSchema);
@@ -49,7 +50,7 @@ class MongoUserRepository {
         return __awaiter(this, void 0, void 0, function* () {
             const userModel = new this.userModel(user);
             const savedUser = yield userModel.save();
-            return new user_1.User(savedUser._id.toString(), savedUser.name, savedUser.email, savedUser.password);
+            return new user_1.User(savedUser._id.toString(), savedUser.nombre, savedUser.apellido, savedUser.correo, savedUser.password);
         });
     }
     findById(id) {
@@ -57,13 +58,13 @@ class MongoUserRepository {
             const user = yield this.userModel.findById(id);
             if (!user)
                 return null;
-            return new user_1.User(user._id.toString(), user.name, user.email, user.password);
+            return new user_1.User(user._id.toString(), user.nombre, user.apellido, user.correo, user.password);
         });
     }
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield this.userModel.find();
-            return users.map(user => new user_1.User(user._id.toString(), user.name, user.email, user.password));
+            return users.map(user => new user_1.User(user._id.toString(), user.nombre, user.apellido, user.correo, user.password));
         });
     }
     update(user) {
@@ -71,7 +72,7 @@ class MongoUserRepository {
             const updatedUser = yield this.userModel.findByIdAndUpdate(user.id, user, { new: true });
             if (!updatedUser)
                 return null;
-            return new user_1.User(updatedUser._id.toString(), updatedUser.name, updatedUser.email, updatedUser.password);
+            return new user_1.User(updatedUser._id.toString(), updatedUser.nombre, updatedUser.apellido, updatedUser.correo, updatedUser.password);
         });
     }
     deleteById(id) {

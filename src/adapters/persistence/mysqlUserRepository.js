@@ -17,9 +17,9 @@ class MysqlUserRepository {
     }
     save(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [result] = yield this.connection.execute('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [user.name, user.email, user.password]);
+            const [result] = yield this.connection.execute('INSERT INTO users (nombre, apellido, correo, password) VALUES (?, ?, ?, ?)', [user.nombre, user.apellido, user.correo, user.password]);
             const insertId = result.insertId;
-            return new user_1.User(insertId.toString(), user.name, user.email, user.password);
+            return new user_1.User(insertId.toString(), user.nombre, user.apellido, user.correo, user.password);
         });
     }
     findById(id) {
@@ -29,19 +29,19 @@ class MysqlUserRepository {
             if (users.length === 0)
                 return null;
             const user = users[0];
-            return new user_1.User(user.id.toString(), user.name, user.email, user.password);
+            return new user_1.User(user.id.toString(), user.nombre, user.apellido, user.correo, user.password);
         });
     }
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const [rows] = yield this.connection.execute('SELECT * FROM users');
             const users = rows;
-            return users.map(user => new user_1.User(user.id.toString(), user.name, user.email, user.password));
+            return users.map(user => new user_1.User(user.id.toString(), user.nombre, user.apellido, user.correo, user.password));
         });
     }
     update(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.connection.execute('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?', [user.name, user.email, user.password, user.id]);
+            yield this.connection.execute('UPDATE users SET nombre = ?, apellido = ?, correo = ?, password = ? WHERE id = ?', [user.nombre, user.apellido, user.correo, user.password, user.id]);
             return user;
         });
     }
