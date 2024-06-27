@@ -1,5 +1,6 @@
 import { User } from './user';
 import { Vendedor } from './vendedor';
+import { Appointment } from './appointment';
 
 export interface UserRepository {
     save(user: User): Promise<User>;
@@ -14,5 +15,13 @@ export interface VendedorRepository {
     findById(id: string): Promise<Vendedor | null>;
     findAll(): Promise<Vendedor[]>;
     update(vendedor: Vendedor): Promise<Vendedor | null>;
+    deleteById(id: string): Promise<void>;
+}
+
+export interface AppointmentRepository {
+    save(appointment: Appointment): Promise<Appointment>;
+    findById(id: string): Promise<Appointment | null>;
+    findAll(): Promise<Appointment[]>;
+    update(appointment: Appointment): Promise<Appointment | null>;
     deleteById(id: string): Promise<void>;
 }

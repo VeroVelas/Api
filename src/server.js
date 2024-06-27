@@ -18,12 +18,16 @@ const database_1 = require("./config/database");
 const database_2 = require("./config/database");
 const userController_1 = require("./adapters/http/userController");
 const vendedorController_1 = require("./adapters/http/vendedorController");
+const appointmentController_1 = require("./adapters/http/appointmentController");
 const mongoUserRepository_1 = require("./adapters/persistence/mongoUserRepository");
 const mysqlUserRepository_1 = require("./adapters/persistence/mysqlUserRepository");
 const mongoVendedorRepository_1 = require("./adapters/persistence/mongoVendedorRepository");
 const mysqlVendedorRepository_1 = require("./adapters/persistence/mysqlVendedorRepository");
+const mongoAppointmentRepository_1 = require("./adapters/persistence/mongoAppointmentRepository");
+const mysqlAppointmentRepository_1 = require("./adapters/persistence/mysqlAppointmentRepository");
 const userService_1 = require("./application/userService");
 const vendedorService_1 = require("./application/vendedorService");
+const appointmentService_1 = require("./application/appointmentService");
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 function startServer() {
@@ -36,6 +40,9 @@ function startServer() {
         const mongoVendedorRepository = new mongoVendedorRepository_1.MongoVendedorRepository();
         const mongoVendedorService = new vendedorService_1.VendedorService(mongoVendedorRepository);
         const mongoVendedorController = new vendedorController_1.VendedorController(mongoVendedorService);
+        const mongoAppointmentRepository = new mongoAppointmentRepository_1.MongoAppointmentRepository();
+        const mongoAppointmentService = new appointmentService_1.AppointmentService(mongoAppointmentRepository);
+        const mongoAppointmentController = new appointmentController_1.AppointmentController(mongoAppointmentService);
         // Conectar a MySQL
         const mysqlConnection = yield (0, database_2.connectToMySQL)();
         const mysqlUserRepository = new mysqlUserRepository_1.MysqlUserRepository(mysqlConnection);
@@ -44,6 +51,9 @@ function startServer() {
         const mysqlVendedorRepository = new mysqlVendedorRepository_1.MysqlVendedorRepository(mysqlConnection);
         const mysqlVendedorService = new vendedorService_1.VendedorService(mysqlVendedorRepository);
         const mysqlVendedorController = new vendedorController_1.VendedorController(mysqlVendedorService);
+        const mysqlAppointmentRepository = new mysqlAppointmentRepository_1.MysqlAppointmentRepository(mysqlConnection);
+        const mysqlAppointmentService = new appointmentService_1.AppointmentService(mysqlAppointmentRepository);
+        const mysqlAppointmentController = new appointmentController_1.AppointmentController(mysqlAppointmentService);
         // Rutas para Usuarios (MongoDB y MySQL)
         app.post('/users/mongo', (req, res) => mongoUserController.createUser(req, res));
         app.get('/users/mongo/:id', (req, res) => mongoUserController.getUser(req, res));
@@ -62,6 +72,15 @@ function startServer() {
         app.get('/vendedores/mysql/:id', (req, res) => mysqlVendedorController.getVendedor(req, res));
         app.put('/vendedores/mysql/:id', (req, res) => mysqlVendedorController.updateVendedor(req, res));
         app.delete('/vendedores/mysql/:id', (req, res) => mysqlVendedorController.deleteVendedor(req, res));
+        // Rutas para Citas (Appointments) (MongoDB y MySQL)
+        app.post('/appointments/mongo', (req, res) => mongoAppointmentController.createAppointment(req, res));
+        app.get('/appointments/mongo/:id', (req, res) => mongoAppointmentController.getAppointment(req, res));
+        app.put('/appointments/mongo/:id', (req, res) => mongoAppointmentController.updateAppointment(req, res));
+        app.delete('/appointments/mongo/:id', (req, res) => mongoAppointmentController.deleteAppointment(req, res));
+        app.post('/appointments/mysql', (req, res) => mysqlAppointmentController.createAppointment(req, res));
+        app.get('/appointments/mysql/:id', (req, res) => mysqlAppointmentController.getAppointment(req, res));
+        app.put('/appointments/mysql/:id', (req, res) => mysqlAppointmentController.updateAppointment(req, res));
+        app.delete('/appointments/mysql/:id', (req, res) => mysqlAppointmentController.deleteAppointment(req, res));
         app.listen(3000, () => {
             console.log('Server is running on port 3000');
         });
