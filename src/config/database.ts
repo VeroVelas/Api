@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { createConnection } from 'mysql2/promise';
 
-const mongoUri = 'mongodb+srv://pedroportillor22:pedroportillo@cluster0.sqnnlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const mongoUri = 'mongodb+srv://verito:12345@cluster0.8dph9uk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 export const connectToMongo = async () => {
     try {
@@ -20,7 +20,7 @@ export const connectToMySQL = async () => {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'apiexagonalmantenimiento',
+            database: 'apivero',
         });
         console.log('Connected to MySQL');
         return connection;

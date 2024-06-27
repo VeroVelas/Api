@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectToMySQL = exports.connectToMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const promise_1 = require("mysql2/promise");
-const mongoUri = 'mongodb+srv://pedroportillor22:pedroportillo@cluster0.sqnnlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const mongoUri = 'mongodb+srv://verito:12345@cluster0.8dph9uk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const connectToMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(mongoUri);
@@ -33,7 +33,7 @@ const connectToMySQL = () => __awaiter(void 0, void 0, void 0, function* () {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'apiexagonalmantenimiento',
+            database: 'apivero',
         });
         console.log('Connected to MySQL');
         return connection;

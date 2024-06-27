@@ -82,7 +82,7 @@ function startServer() {
         app.put('/appointments/mysql/:id', (req, res) => mysqlAppointmentController.updateAppointment(req, res));
         app.delete('/appointments/mysql/:id', (req, res) => mysqlAppointmentController.deleteAppointment(req, res));
         app.listen(3000, () => {
-            console.log('Server is running on port 3000');
+            console.log('Server is running on port 3010');
         });
     });
 }
