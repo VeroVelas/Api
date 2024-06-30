@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node --max-old-space-size=4096 src/server.ts",
     "build": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc",
     "serve": "node dist/server.js",
     "start:dev": "ts-node-dev --respawn src/server.ts",
