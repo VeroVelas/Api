@@ -25,3 +25,4 @@ export interface AppointmentRepository {
     update(appointment: Appointment): Promise<Appointment | null>;
     deleteById(id: string): Promise<void>;
 }
+
